@@ -34,7 +34,7 @@ export default function Login({ navigation }: any) {
     <KeyboardAwareScrollView
       contentContainerStyle={{ flex: 1 }}
       style={{ width: '100%' }}
-      keyboardShouldPersistTaps="always"
+      keyboardShouldPersistTaps="handled"
     >
       <VStack
         flex={1}

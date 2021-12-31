@@ -83,7 +83,7 @@ const Sidebar = (props: DrawerContentComponentProps) => {
           w="190"
           closeOnSelect={false}
           onOpen={() => setMenuOpen(true)}
-          // onClose={() => console.log('closed')}
+          onClose={() => setMenuOpen(false)}
           isOpen={menuOpen}
           trigger={triggerProps => {
             return (

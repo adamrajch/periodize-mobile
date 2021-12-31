@@ -1,8 +1,8 @@
-import React, { useCallback } from 'react'
-import { HStack, IconButton } from 'native-base'
 import { Feather } from '@expo/vector-icons'
-import { useNavigation } from '@react-navigation/native'
 import { DrawerNavigationProp } from '@react-navigation/drawer'
+import { useNavigation } from '@react-navigation/native'
+import { HStack, IconButton } from 'native-base'
+import React, { useCallback } from 'react'
 
 const NavBar = () => {
   const navigation = useNavigation<DrawerNavigationProp<{}>>()
@@ -19,7 +19,7 @@ const NavBar = () => {
           as: Feather,
           name: 'menu',
           size: 6,
-          color: 'white'
+          color: 'white',
         }}
       />
     </HStack>

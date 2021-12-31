@@ -76,7 +76,7 @@ export default function SignUp({ navigation }: any) {
       <KeyboardAwareScrollView
         contentContainerStyle={{ flex: 1 }}
         style={{ width: '100%' }}
-        keyboardShouldPersistTaps="always"
+        keyboardShouldPersistTaps="handled"
       >
         <VStack
           flex={1}
