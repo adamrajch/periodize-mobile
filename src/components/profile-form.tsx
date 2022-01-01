@@ -1,71 +1,102 @@
+import { doc, setDoc } from 'firebase/firestore'
 import { Formik } from 'formik'
 import {
   Avatar,
   Box,
   Button,
   FormControl,
-  Heading,
   Image,
   Input,
   Text,
   VStack,
 } from 'native-base'
 import React from 'react'
+import * as Yup from 'yup'
+import { db } from '../../firebase'
+const ProfileSchema = Yup.object().shape({
+  email: Yup.string()
+    .min(4, 'Too Short!')
+    .max(40, 'Too Long!')
+    .required('Required'),
+  name: Yup.string()
+    .min(2, 'Value must be between 6-20 charachters!')
+    .max(20, 'Too Long!'),
+})
 
 export default function ProfileForm({ user }: any): JSX.Element {
   const initialValues = {
+    name: user.name ? user.name : '',
     email: user.email,
-    password: '',
-    confirmPassword: '',
   }
 
   return (
-    <VStack flex={1} space={4}>
-      <Box alignItems="center">
-        {user.photoUrl ? (
-          <Image
-            source={user.photoUrl}
-            borderRadius="full"
-            resizeMode="cover"
-            w={120}
-            h={120}
-            alt="author"
-          />
-        ) : (
-          <Avatar
-            w={120}
-            h={120}
-            source={{
-              uri: 'https://i.pinimg.com/474x/5e/37/b5/5e37b5c69eeb267f01d0746ba1b79d6d.jpg',
-            }}
-          />
-        )}
-      </Box>
+    <VStack flex={1} space={4} alignItems="center">
       <Formik
         initialValues={initialValues}
-        onSubmit={async values => {
-          // createUserWithEmail(values.email, values.password)
+        onSubmit={async (values, actions) => {
+          console.log(values)
+          try {
+            await setDoc(
+              doc(db, 'users', user.uid),
+              {
+                ...user,
+                name: values.name,
+              },
+              { merge: true }
+            )
+          } catch (error) {
+            console.log('from comment : ', error)
+            actions.setSubmitting(false)
+          }
         }}
         enableReinitialize={false}
         validateOnChange={false}
         validateOnBlur={false}
-        // validationSchema={SignUpSchema}
+        validationSchema={ProfileSchema}
       >
-        {({ handleSubmit, handleChange, errors, handleBlur, values }) => (
-          <Box safeArea p="2" py="8" w="95%" maxW="300">
-            <Heading
-              size="lg"
-              fontWeight="600"
-              color="coolGray.800"
-              _dark={{
-                color: 'warmGray.50',
-              }}
-            >
-              Periodize
-            </Heading>
-
+        {({
+          handleSubmit,
+          handleChange,
+          errors,
+          handleBlur,
+          values,
+          setFieldValue,
+          isSubmitting,
+        }) => (
+          <Box safeArea p="2" py="8" w="95%" maxW="340">
+            <Box alignItems="center">
+              {user.photoUrl ? (
+                <Image
+                  source={user.photoUrl}
+                  borderRadius="full"
+                  resizeMode="cover"
+                  w={120}
+                  h={120}
+                  alt="author"
+                />
+              ) : (
+                <Avatar
+                  w={120}
+                  h={120}
+                  source={{
+                    uri: 'https://i.pinimg.com/474x/5e/37/b5/5e37b5c69eeb267f01d0746ba1b79d6d.jpg',
+                  }}
+                />
+              )}
+            </Box>
             <VStack space={3} mt="5">
-              <FormControl isRequired>
+              <FormControl>
+                <FormControl.Label>Username</FormControl.Label>
+                <Input
+                  size="lg"
+                  onChangeText={handleChange('name')}
+                  onBlur={handleBlur('name')}
+                  value={values.name}
+                  autoCapitalize="none"
+                />
+                {errors.name && <Text color="red.700">{errors.name}</Text>}
+              </FormControl>
+              <FormControl>
                 <FormControl.Label>Email</FormControl.Label>
                 <Input
                   size="lg"
@@ -73,38 +104,27 @@ export default function ProfileForm({ user }: any): JSX.Element {
                   onBlur={handleBlur('email')}
                   value={values.email}
                   autoCapitalize="none"
-                />
-                {errors.email && <Text color="red.700">{errors.email}</Text>}
-              </FormControl>
-              <FormControl isRequired>
-                <FormControl.Label>Password</FormControl.Label>
-                <Input
-                  size="lg"
-                  onChangeText={handleChange('password')}
-                  onBlur={handleBlur('password')}
-                  value={values.password}
-                  autoCapitalize="none"
+                  isDisabled
                 />
               </FormControl>
-              <FormControl isRequired>
-                <FormControl.Label>Confirm Password</FormControl.Label>
-                <Input
-                  size="lg"
-                  onChangeText={handleChange('confirmPassword')}
-                  onBlur={handleBlur('confirmPassword')}
-                  value={values.confirmPassword}
-                  autoCapitalize="none"
+              {/* <FormControl>
+                <FormControl.Label>Bio</FormControl.Label>
+                <TextArea
+                  value={bio}
+                  onChange={e => handleBio(e)}
+                  placeholder="short bio"
+                  w={{
+                    md: '25%',
+                  }}
                 />
-                {errors.confirmPassword && (
-                  <Text color="red.700">{errors.confirmPassword}</Text>
-                )}
-              </FormControl>
+              </FormControl> */}
               <Button
                 mt="2"
                 colorScheme="indigo"
                 onPress={() => handleSubmit()}
+                disabled={isSubmitting}
               >
-                Create Account
+                Save Update
               </Button>
             </VStack>
           </Box>

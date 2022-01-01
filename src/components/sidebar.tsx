@@ -28,6 +28,9 @@ const Sidebar = (props: DrawerContentComponentProps) => {
   const handlePressMenuMain = useCallback(() => {
     navigation.navigate('Main')
   }, [navigation])
+  const handlePressMenuPrograms = useCallback(() => {
+    navigation.navigate('Programs')
+  }, [navigation])
   const handlePressMenuAbout = useCallback(() => {
     navigation.navigate('About')
   }, [navigation])
@@ -64,18 +67,33 @@ const Sidebar = (props: DrawerContentComponentProps) => {
           <ThemeToggle />
         </Center>
         <MenuButton
-          active={currentRoute === 'Main'}
+          active={currentRoute === 'Dashboard'}
           onPress={handlePressMenuMain}
-          icon="inbox"
+          icon="info"
         >
-          Tasks
+          Dashboard
         </MenuButton>
         <MenuButton
-          active={currentRoute === 'About'}
+          active={currentRoute === 'Main'}
+          onPress={handlePressMenuMain}
+          icon="book"
+        >
+          Library
+        </MenuButton>
+        <MenuButton
+          active={currentRoute === 'Programs'}
+          onPress={handlePressMenuPrograms}
+          icon="book"
+        >
+          Programs
+        </MenuButton>
+
+        <MenuButton
+          active={currentRoute === 'Dashboard'}
           onPress={handlePressMenuAbout}
           icon="info"
         >
-          About
+          My Schedule
         </MenuButton>
       </VStack>
       {!loading && (
