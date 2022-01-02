@@ -3,10 +3,11 @@ import { createStackNavigator } from '@react-navigation/stack'
 import React from 'react'
 import Sidebar from './components/sidebar'
 import AboutScreen from './screens/about-screen'
-import FeaturedScreen from './screens/featured-programs'
 import MainScreen from './screens/main-screen'
 import Profile from './screens/profile'
 import ProgramsScreen from './screens/programs-screen'
+import CategoryScreen from './screens/programs/category-screen'
+import SingleProgram from './screens/programs/single-program'
 const Drawer = createDrawerNavigator()
 const Stack = createStackNavigator()
 
@@ -14,13 +15,18 @@ function ProgramsNav() {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="Find Program "
+        name="Programs"
         component={ProgramsScreen}
         options={{ headerShown: false }}
       />
       <Stack.Screen
-        name="Featured"
-        component={FeaturedScreen}
+        name="Category"
+        component={CategoryScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Individual Program"
+        component={SingleProgram}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
@@ -39,7 +45,7 @@ const App = () => {
     >
       <Drawer.Screen name="Main" component={MainScreen} />
       <Drawer.Screen name="About" component={AboutScreen} />
-      <Drawer.Screen name="Programs" component={ProgramsNav} />
+      <Drawer.Screen name="Discover" component={ProgramsNav} />
       <Drawer.Screen name="Profile" component={Profile} />
     </Drawer.Navigator>
   )

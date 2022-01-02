@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "boiler-rn",
-    "slug": "boiler-rn",
+    "name": "periodize-mobile",
+    "slug": "periodize-mobile",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",

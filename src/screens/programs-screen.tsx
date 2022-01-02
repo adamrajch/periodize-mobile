@@ -16,37 +16,37 @@ import Navbar from '../components/navbar'
 const pages = [
   {
     title: 'Featured',
-    href: 'Featured',
+    href: 'featured',
     text: "The community's finest",
     color: '#0B7285',
   },
   {
     title: 'Powerlifting',
-    href: '/programs/category/powerlifting',
+    href: 'powerlifting',
     text: 'Squat Bench Deadlift Specific programs.  Heavier loads, lesser volume, with an emphasis on the main movements',
     color: '#E03131',
   },
   {
     title: 'Bodybuilding',
-    href: '/programs/category/bodybuilding',
+    href: 'bodybuilding',
     text: 'Aesthetics first. Lots of volume and exercise variation. Effective at adding muscle mass ',
     color: '#2F9E44',
   },
   {
     title: 'Weightlifting',
-    href: '/programs/category/weightlifting',
+    href: 'weightlifting',
     text: 'Clean and Jerk and Snatch. Highly technical, expect many squats, overhead pressing movements, and singles of the main lifts',
     color: '#1971C2',
   },
   {
     title: 'Sport',
-    href: '/programs/category/sport',
+    href: 'sport',
     text: 'Specific programs for various athletes. Power, speed, endurance, coordination, and sport specific drills',
     color: '#C2255C',
   },
   {
     title: 'Mobility',
-    href: '/programs/category/mobility',
+    href: 'mobility',
     text: ' Emphasis on strength and ability to move through a given range of motion. Mobility has huge benefit and carryover to performance in various activities',
     color: '#4b3097',
   },
@@ -82,8 +82,12 @@ const ProgramsScreen = ({ navigation }: any) => {
           {pages.map(page => (
             <Pressable
               onPress={() => {
-                navigation.navigate(page.href)
+                navigation.navigate('Category', {
+                  title: page.title,
+                  fetchUrl: page.href,
+                })
               }}
+              key={page.href}
             >
               <Box
                 height="130px"
@@ -94,7 +98,6 @@ const ProgramsScreen = ({ navigation }: any) => {
                 px="2"
                 mt="4"
                 shadow="9"
-                // style={{shadowColor:}}
               >
                 <VStack flex={1} space={4}>
                   <Icon as={Ionicons} name="home" color="white" />

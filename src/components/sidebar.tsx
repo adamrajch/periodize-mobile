@@ -29,7 +29,7 @@ const Sidebar = (props: DrawerContentComponentProps) => {
     navigation.navigate('Main')
   }, [navigation])
   const handlePressMenuPrograms = useCallback(() => {
-    navigation.navigate('Programs')
+    navigation.navigate('Discover')
   }, [navigation])
   const handlePressMenuAbout = useCallback(() => {
     navigation.navigate('About')
@@ -81,7 +81,7 @@ const Sidebar = (props: DrawerContentComponentProps) => {
           Library
         </MenuButton>
         <MenuButton
-          active={currentRoute === 'Programs'}
+          active={currentRoute === 'Discover'}
           onPress={handlePressMenuPrograms}
           icon="book"
         >
