@@ -15,8 +15,7 @@ import {
   VStack,
 } from 'native-base'
 import React, { useState } from 'react'
-import AnimatedColorBox from '../../components/animated-color-box'
-import NavBar from '../../components/navbar'
+import StackNavBar from '../../components/stack-navbar'
 const SingleProgram = ({ navigation, route }: any) => {
   const [index, setIndex] = useState(0)
   const [blockIndex, setBlockIndex] = useState(0)
@@ -26,30 +25,44 @@ const SingleProgram = ({ navigation, route }: any) => {
   const { id, program } = route.params
   const p = program
   const [loading, setLoading] = useState<boolean>(false)
-  console.log(program)
+  // console.log(program)
   return (
-    <ScrollView
-      bg={useColorModeValue('warmGray.50', 'primary.700')}
-      _contentContainerStyle={{
-        mb: '60',
-      }}
+    <Box
       flex={1}
+      bg={useColorModeValue(
+        {
+          linearGradient: {
+            colors: ['gray.100', 'gray.200'],
+            start: [0, 0],
+            end: [0, 1],
+          },
+        },
+        {
+          linearGradient: {
+            colors: ['gray.700', 'gray.800'],
+            start: [0, 0],
+            end: [0, 1],
+          },
+        }
+      )}
+      w="full"
+      // p={2}
     >
-      <AnimatedColorBox
-        flex={1}
-        bg={useColorModeValue('warmGray.50', 'primary.700')}
-        w="full"
-        p={2}
-        mb={4}
+      <ScrollView
+        _contentContainerStyle={{
+          minW: '72',
+          flex: 1,
+          px: 2,
+        }}
       >
-        <NavBar />
-
+        <StackNavBar />
         <Fab
           placement="bottom-right"
-          colorScheme="blue"
+          colorScheme="gray"
           size="lg"
           icon={<Feather name="search" size={24} color="black" />}
           onPress={() => setShowModal(true)}
+          shadow={9}
         />
         <Modal isOpen={showModal} onClose={() => setShowModal(false)} size="xl">
           <Modal.Content maxWidth="600px">
@@ -59,7 +72,7 @@ const SingleProgram = ({ navigation, route }: any) => {
               <VStack space={2}>
                 {p.template.blocks.map((block: any, bi: number) => (
                   <VStack space={2} key={bi}>
-                    <Text>{block.name}</Text>
+                    <Text>Block {bi + 1}</Text>
                     <HStack space={2}>
                       {block.weeks.map((week: any, wi: number) => (
                         <Button
@@ -69,8 +82,9 @@ const SingleProgram = ({ navigation, route }: any) => {
                               setWeekIndex(wi),
                               setShowModal(false)
                           }}
+                          size="sm"
                         >
-                          {week.name}
+                          {`Week ${wi + 1}`}
                         </Button>
                       ))}
                     </HStack>
@@ -80,16 +94,20 @@ const SingleProgram = ({ navigation, route }: any) => {
             </Modal.Body>
           </Modal.Content>
         </Modal>
-        <VStack space={1} my={2}>
+        <VStack space={0} my={2}>
           <HStack alignItems="center" justifyContent="space-between">
             <Heading size="lg">{p.template.title}</Heading>
           </HStack>
-          <Text>
-            Author:{' '}
-            <Text bold italic fontSize="md">
-              {p.author.name}
-            </Text>
-          </Text>
+          <HStack alignItems="center">
+            <Text>Author: </Text>
+            <Pressable
+              onPress={() => navigation.navigate('User', { author: p.author })}
+            >
+              <Text bold italic fontSize="md">
+                {p.author.name}
+              </Text>
+            </Pressable>
+          </HStack>
           <HStack></HStack>
 
           <HStack space={2}>
@@ -107,72 +125,81 @@ const SingleProgram = ({ navigation, route }: any) => {
               </Text>
             ))}
           </HStack>
-          <Text>{p.numberOfWeeks} Weeks</Text>
+          <Text>
+            {p.numberOfWeeks} {p.numberOfWeeks === 1 ? 'Week' : 'Weeks'}
+          </Text>
         </VStack>
 
-        <HStack justifyContent="space-between" mb={2} alignItems="center">
-          <Text fontSize="md">
-            B{blockIndex + 1} W{weekIndex + 1}
-          </Text>
-          <HStack space={4} mr={2} alignItems="center">
-            {p.featured && (
-              <Box
-                bg={{
-                  linearGradient: {
-                    colors: ['lightBlue.300', 'violet.800'],
-                    start: [0, 0],
-                    end: [1, 0],
-                  },
-                }}
-                p={1}
-                rounded="md"
-              >
-                <FontAwesome name="trophy" size={24} color="white" />
-              </Box>
-            )}
-
-            <Pressable>
-              <FontAwesome name="heart" size={21} color="white" />
-            </Pressable>
-            <Menu
-              w="190"
-              trigger={triggerProps => {
-                return (
-                  <Pressable
-                    accessibilityLabel="options menu"
-                    {...triggerProps}
-                  >
-                    <Entypo
-                      name="dots-three-vertical"
-                      size={18}
-                      color="white"
-                    />
-                  </Pressable>
-                )
+        <HStack justifyContent="flex-end" space={4} mb={2} alignItems="center">
+          <Button colorScheme="red" rounded="sm" size="sm">
+            Subscribe
+          </Button>
+          {p.featured && (
+            <Box
+              bg={{
+                linearGradient: {
+                  colors: ['lightBlue.300', 'violet.800'],
+                  start: [0, 0],
+                  end: [1, 0],
+                },
               }}
+              p={1}
+              rounded="md"
             >
-              <Menu.Item>Subscribe</Menu.Item>
-              <Menu.Item>Favorite</Menu.Item>
-            </Menu>
-          </HStack>
+              <FontAwesome name="trophy" size={24} color="white" />
+            </Box>
+          )}
+
+          <Pressable>
+            <FontAwesome name="heart" size={21} color="white" />
+          </Pressable>
+          <Menu
+            w="190"
+            trigger={triggerProps => {
+              return (
+                <Pressable accessibilityLabel="options menu" {...triggerProps}>
+                  <Entypo name="dots-three-vertical" size={18} color="white" />
+                </Pressable>
+              )
+            }}
+          >
+            <Menu.Item>Subscribe</Menu.Item>
+            <Menu.Item>Favorite</Menu.Item>
+          </Menu>
         </HStack>
-        <Box>
-          <VStack space={3}>
+
+        <Box mt={4}>
+          <VStack space={4}>
             {p.template.blocks[blockIndex].weeks[weekIndex].days.map(
               (day: any, di: number) => (
                 <Box
                   key={di}
                   p={2}
-                  shadow={4}
-                  bg="primary.600"
+                  shadow={9}
+                  bg={useColorModeValue('gray.300', 'gray.700')}
                   borderRadius="md"
                 >
-                  <Heading textAlign="center" mb={2}>
-                    {day.name}
-                  </Heading>
+                  <HStack
+                    justifyContent="space-between"
+                    alignItems="center"
+                    mb={2}
+                  >
+                    <Text fontSize="sm">
+                      B{blockIndex + 1} W{weekIndex + 1}
+                    </Text>
+                    <Heading size="md" mb={2}>
+                      {day.name}
+                    </Heading>
+                    {day.summary.length > 0 ? (
+                      <FontAwesome name="file-text-o" size={18} color="white" />
+                    ) : (
+                      <Text>{`   `}</Text>
+                    )}
+                  </HStack>
+
                   <VStack space={2}>
                     {day.lifts.map((lift: any, li: number) => (
-                      <HStack space={4}>
+                      <HStack space={4} key={li}>
                         <Text w="3/5" fontSize="md">
                           {li + 1}.{' '}
                           <Text bold isTruncated fontSize="md">
@@ -200,7 +227,7 @@ const SingleProgram = ({ navigation, route }: any) => {
                                 <FontAwesome
                                   name="sticky-note-o"
                                   size={18}
-                                  color="whire"
+                                  color="white"
                                 />
                               )}
                             </Text>
@@ -214,8 +241,8 @@ const SingleProgram = ({ navigation, route }: any) => {
             )}
           </VStack>
         </Box>
-      </AnimatedColorBox>
-    </ScrollView>
+      </ScrollView>
+    </Box>
   )
 }
 

@@ -8,6 +8,7 @@ import Profile from './screens/profile'
 import ProgramsScreen from './screens/programs-screen'
 import CategoryScreen from './screens/programs/category-screen'
 import SingleProgram from './screens/programs/single-program'
+import UserScreen from './screens/user-screen'
 const Drawer = createDrawerNavigator()
 const Stack = createStackNavigator()
 
@@ -27,6 +28,11 @@ function ProgramsNav() {
       <Stack.Screen
         name="Individual Program"
         component={SingleProgram}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="User"
+        component={UserScreen}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>

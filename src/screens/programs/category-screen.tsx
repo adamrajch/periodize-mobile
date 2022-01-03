@@ -7,10 +7,10 @@ import {
   startAfter,
   where,
 } from 'firebase/firestore'
-import { Heading, ScrollView, useColorModeValue, VStack } from 'native-base'
+import { Heading, VStack } from 'native-base'
 import React, { useEffect, useState } from 'react'
 import { db } from '../../../firebase'
-import AnimatedColorBox from '../../components/animated-color-box'
+import PageContainer from '../../components/page-container'
 import ProgramBox from '../../components/programs/program-box'
 
 const CategoryScreen = ({ navigation, route }: any) => {
@@ -98,28 +98,15 @@ const CategoryScreen = ({ navigation, route }: any) => {
     navigation.navigate('Individual Program', { id: id, program: p })
   }
   return (
-    <AnimatedColorBox
-      flex={1}
-      bg={useColorModeValue('warmGray.50', 'warmGray.900')}
-      w="full"
-    >
-      <ScrollView
-        borderTopLeftRadius="10px"
-        borderTopRightRadius="10px"
-        bg={useColorModeValue('warmGray.50', 'primary.700')}
-        mt="-20px"
-        pt="30px"
-        p={2}
-      >
-        <Heading>{title}</Heading>
-        <VStack space={4}>
-          {programs.length > 0 &&
-            programs.map((p: any) => (
-              <ProgramBox key={p.id} id={p.id} p={p} navigate={navToID} />
-            ))}
-        </VStack>
-      </ScrollView>
-    </AnimatedColorBox>
+    <PageContainer>
+      <Heading mb={4}>{title}</Heading>
+      <VStack space={2}>
+        {programs.length > 0 &&
+          programs.map((p: any) => (
+            <ProgramBox key={p.id} id={p.id} p={p} navigate={navToID} />
+          ))}
+      </VStack>
+    </PageContainer>
   )
 }
 
