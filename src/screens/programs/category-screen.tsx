@@ -97,6 +97,7 @@ const CategoryScreen = ({ navigation, route }: any) => {
   function navToID(id: string, p: any) {
     navigation.navigate('Individual Program', { id: id, program: p })
   }
+
   return (
     <PageContainer>
       <Heading mb={4}>{title}</Heading>

@@ -1,6 +1,5 @@
 import { Box, ScrollView, useColorModeValue } from 'native-base'
 import React, { ReactElement } from 'react'
-import StackNavBar from './stack-navbar'
 
 interface Props {
   children: React.ReactNode
@@ -27,16 +26,16 @@ export default function PageContainer({ children }: Props): ReactElement {
         }
       )}
       w="full"
-      // p={2}
+      pt={6}
+      pb={110}
     >
       <ScrollView
         _contentContainerStyle={{
-          minW: '72',
-          flex: 1,
+          flexGrow: 1,
           px: 2,
+          py: 12,
         }}
       >
-        <StackNavBar />
         {children}
       </ScrollView>
     </Box>

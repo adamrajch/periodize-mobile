@@ -1,18 +1,8 @@
 import { Ionicons } from '@expo/vector-icons'
-import {
-  Box,
-  HStack,
-  Icon,
-  ScrollView,
-  Text,
-  useColorModeValue,
-  VStack,
-} from 'native-base'
+import { Box, Icon, Text, VStack } from 'native-base'
 import React from 'react'
 import { Pressable } from 'react-native'
-import AnimatedColorBox from '../components/animated-color-box'
-import Masthead from '../components/masthead'
-import Navbar from '../components/navbar'
+import PageContainer from '../components/page-container'
 const pages = [
   {
     title: 'Featured',
@@ -53,64 +43,38 @@ const pages = [
 ]
 const ProgramsScreen = ({ navigation }: any) => {
   return (
-    <AnimatedColorBox
-      flex={1}
-      bg={useColorModeValue('warmGray.50', 'warmGray.900')}
-      w="full"
-    >
-      <Masthead
-        title="Programs"
-        image={require('../assets/about-masthead.png')}
-      >
-        <Navbar />
-      </Masthead>
-      <ScrollView
-        borderTopLeftRadius="10px"
-        borderTopRightRadius="10px"
-        // bg={useColorModeValue('warmGray.200', 'primary.700')}
-        bg={useColorModeValue('warmGray.50', 'primary.700')}
-        mt="-20px"
-        pt="30px"
-        p={2}
-      >
-        <HStack
-          space={2}
-          style={{ flexWrap: 'wrap' }}
-          alignItems="center"
-          justifyContent="center"
-        >
-          {pages.map(page => (
-            <Pressable
-              onPress={() => {
-                navigation.navigate('Category', {
-                  title: page.title,
-                  fetchUrl: page.href,
-                })
-              }}
-              key={page.href}
+    <PageContainer>
+      <VStack space={4} alignItems="center" justifyContent="center">
+        {pages.map(page => (
+          <Pressable
+            style={{ width: '100%' }}
+            onPress={() => {
+              navigation.navigate('Category', {
+                title: page.title,
+                fetchUrl: page.href,
+              })
+            }}
+            key={page.href}
+          >
+            <Box
+              height="130px"
+              w="full"
+              bgColor={page.color}
+              borderRadius="md"
+              p="4"
+              shadow="9"
             >
-              <Box
-                height="130px"
-                w="115px"
-                bgColor={page.color}
-                borderRadius="md"
-                pt="4"
-                px="2"
-                mt="4"
-                shadow="9"
-              >
-                <VStack flex={1} space={4}>
-                  <Icon as={Ionicons} name="home" color="white" />
-                  <Text color="white" fontSize="md" fontWeight="medium">
-                    {page.title}
-                  </Text>
-                </VStack>
-              </Box>
-            </Pressable>
-          ))}
-        </HStack>
-      </ScrollView>
-    </AnimatedColorBox>
+              <VStack flex={1} space={4}>
+                <Icon as={Ionicons} name="home" color="white" />
+                <Text color="white" fontSize="md" fontWeight="medium">
+                  {page.title}
+                </Text>
+              </VStack>
+            </Box>
+          </Pressable>
+        ))}
+      </VStack>
+    </PageContainer>
   )
 }
 

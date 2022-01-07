@@ -13,6 +13,7 @@ import {
 import React from 'react'
 import * as Yup from 'yup'
 import { db } from '../../firebase'
+import ThemeToggle from './theme-toggle'
 const ProfileSchema = Yup.object().shape({
   email: Yup.string()
     .min(4, 'Too Short!')
@@ -107,25 +108,17 @@ export default function ProfileForm({ user }: any): JSX.Element {
                   isDisabled
                 />
               </FormControl>
-              {/* <FormControl>
-                <FormControl.Label>Bio</FormControl.Label>
-                <TextArea
-                  value={bio}
-                  onChange={e => handleBio(e)}
-                  placeholder="short bio"
-                  w={{
-                    md: '25%',
-                  }}
-                />
-              </FormControl> */}
+
               <Button
                 mt="2"
+                size="md"
                 colorScheme="indigo"
                 onPress={() => handleSubmit()}
                 disabled={isSubmitting}
               >
                 Save Update
               </Button>
+              <ThemeToggle />
             </VStack>
           </Box>
         )}

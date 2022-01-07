@@ -1,10 +1,4 @@
-import {
-  Center,
-  Heading,
-  ScrollView,
-  Spinner,
-  useColorModeValue,
-} from 'native-base'
+import { Center, ScrollView, Spinner, useColorModeValue } from 'native-base'
 import React from 'react'
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view'
 import AnimatedColorBox from '../components/animated-color-box'
@@ -18,7 +12,7 @@ const Profile = () => {
   return (
     <AnimatedColorBox
       flex={1}
-      bg={useColorModeValue('warmGray.50', 'warmGray.900')}
+      bg={useColorModeValue('warmGray.50', 'primary.800')}
       w="full"
     >
       <KeyboardAwareScrollView
@@ -29,13 +23,13 @@ const Profile = () => {
         <ScrollView
           borderTopLeftRadius="20px"
           borderTopRightRadius="20px"
-          bg={useColorModeValue('warmGray.50', 'primary.900')}
+          bg={useColorModeValue('warmGray.50', 'primary.800')}
           mt="-20px"
           pt="30px"
           p={4}
         >
           <Navbar />
-          <Heading
+          {/* <Heading
             size="lg"
             fontWeight="600"
             color="coolGray.800"
@@ -45,7 +39,7 @@ const Profile = () => {
             textAlign="center"
           >
             Profile
-          </Heading>
+          </Heading> */}
           {loading ? (
             <Center>
               <Spinner accessibilityLabel="Loading profile" />

@@ -6,7 +6,7 @@ import {
   signInWithPopup,
   signOut,
 } from 'firebase/auth'
-import { doc, getDoc } from 'firebase/firestore'
+import { doc, getDoc, onSnapshot } from 'firebase/firestore'
 import React, { useContext, useEffect, useState } from 'react'
 import { auth, db } from '../../firebase'
 import { createUser } from '../hooks/createUser'
@@ -46,9 +46,12 @@ function useProvideAuth() {
         createUser(user.uid, userWithoutToken)
         setUser(user)
       }
-
+      const unsub = onSnapshot(doc(db, 'users', user.uid), doc => {
+        console.log('Updated user: ', doc.data())
+        setUser(doc.data())
+      })
       setLoading(false)
-      return user
+      return unsub
     } else {
       setUser(false)
 
