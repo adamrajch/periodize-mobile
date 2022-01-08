@@ -4,6 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { Text, useColorModeValue, View } from 'native-base'
 import React from 'react'
 import { StyleSheet, TouchableOpacity } from 'react-native'
+import AddWorkoutPage from './screens/add-workout-screen'
+import JournalDashboard from './screens/journal/dashboard'
 import MainScreen from './screens/main-screen'
 import Profile from './screens/profile'
 import ProgramsScreen from './screens/programs-screen'
@@ -63,6 +65,34 @@ function ProgramsNav() {
     </Stack.Navigator>
   )
 }
+function JournalNav() {
+  return (
+    <Stack.Navigator>
+      <Stack.Screen
+        name="Dashboard"
+        component={JournalDashboard}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="Active Programs"
+        component={CategoryScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="History"
+        component={SingleProgram}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PRs"
+        component={UserScreen}
+        options={{ headerShown: false }}
+      />
+    </Stack.Navigator>
+  )
+}
+
+function PostNav() {}
 const TabNav = () => {
   const focusedTextColor = useColorModeValue('#3769f1cc', '#75dbfd')
   const textColor = useColorModeValue('#726a6a', '#f7fdff')
@@ -119,7 +149,7 @@ const TabNav = () => {
         }}
       />
       <Tab.Screen
-        name="Programs"
+        name="ProgramsNav"
         component={ProgramsNav}
         options={{
           tabBarShowLabel: false,
@@ -142,7 +172,7 @@ const TabNav = () => {
                   fontSize: 12,
                 }}
               >
-                Home
+                Programs
               </Text>
             </View>
           ),
@@ -150,7 +180,7 @@ const TabNav = () => {
       />
       <Tab.Screen
         name="Post"
-        component={ProgramsNav}
+        component={AddWorkoutPage}
         options={{
           headerShown: false,
           tabBarShowLabel: false,
@@ -160,8 +190,8 @@ const TabNav = () => {
       />
 
       <Tab.Screen
-        name="Workouts"
-        component={ProgramsNav}
+        name="Journal"
+        component={JournalNav}
         options={{
           headerShown: false,
           tabBarShowLabel: false,

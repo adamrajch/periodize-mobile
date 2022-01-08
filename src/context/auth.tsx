@@ -40,14 +40,14 @@ function useProvideAuth() {
       const docSnap = await getDoc(docRef)
 
       if (docSnap.exists()) {
-        console.log('Document data:', docSnap.data())
+        // console.log('Document data:', docSnap.data())
         setUser(docSnap.data())
       } else {
         createUser(user.uid, userWithoutToken)
         setUser(user)
       }
       const unsub = onSnapshot(doc(db, 'users', user.uid), doc => {
-        console.log('Updated user: ', doc.data())
+        // console.log('Updated user: ', doc.data())
         setUser(doc.data())
       })
       setLoading(false)

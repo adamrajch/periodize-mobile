@@ -1,5 +1,4 @@
-import { Ionicons } from '@expo/vector-icons'
-import { Box, Icon, Text, VStack } from 'native-base'
+import { Box, Heading, useColorModeValue, VStack } from 'native-base'
 import React from 'react'
 import { Pressable } from 'react-native'
 import PageContainer from '../components/page-container'
@@ -44,6 +43,7 @@ const pages = [
 const ProgramsScreen = ({ navigation }: any) => {
   return (
     <PageContainer>
+      <Heading my={8}>Find The Pefect Program</Heading>
       <VStack space={4} alignItems="center" justifyContent="center">
         {pages.map(page => (
           <Pressable
@@ -59,16 +59,15 @@ const ProgramsScreen = ({ navigation }: any) => {
             <Box
               height="130px"
               w="full"
-              bgColor={page.color}
+              bg={useColorModeValue('gray.400', 'gray.700')}
               borderRadius="md"
               p="4"
               shadow="9"
             >
               <VStack flex={1} space={4}>
-                <Icon as={Ionicons} name="home" color="white" />
-                <Text color="white" fontSize="md" fontWeight="medium">
+                <Heading color="white" fontWeight="medium">
                   {page.title}
-                </Text>
+                </Heading>
               </VStack>
             </Box>
           </Pressable>
