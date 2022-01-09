@@ -1,8 +1,8 @@
-import { Box, Button, CheckIcon, Heading, Select } from 'native-base'
+import { Button, CheckIcon, Heading, Select } from 'native-base'
 import React, { useEffect, useState } from 'react'
 import PageContainer from '../components/page-container'
+import WorkoutContainer from '../components/post/workout-container'
 import { useAuth } from '../context/auth'
-
 export default function AddWorkoutPage() {
   const { user, loading } = useAuth()
   const [programs, setPrograms] = useState<any>([])
@@ -60,12 +60,7 @@ export default function AddWorkoutPage() {
         Add Custom Workout
       </Button>
 
-      {program && (
-        <Box>
-          <Heading>My program</Heading>
-          <Heading>{program.programTitle}</Heading>
-        </Box>
-      )}
+      {program && <WorkoutContainer id={`${user.uid}-${program.programId}`} />}
     </PageContainer>
   )
 }
